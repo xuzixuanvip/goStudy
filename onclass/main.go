@@ -42,15 +42,14 @@ func queryParams(w http.ResponseWriter, r *http.Request) {
 	values := r.URL.Query()
 	fmt.Fprintf(w, "query is %v \n", values)
 }
-
 func main() {
 
-	server := NewHttpServer("my-test-server")
+	server := NewHttpServer("my-test-server",MetricFilterBuilder)
 
-	server.Route("POST", "/sign", SignUp)
-	http.HandleFunc("/body", readyBodyOnce)
-	http.HandleFunc("/get_body", getBodyIsNil)
-	http.HandleFunc("/ ", queryParams)
+	server.Route(http.MethodPost, "/sign", SignUp)
+	//http.HandleFunc("/body", readyBodyOnce)
+	//http.HandleFunc("/get_body", getBodyIsNil)
+	//http.HandleFunc("/ ", queryParams)
 	server.Start(":8090")
 	//http.ListenAndServe(":8090", nil)
 }
